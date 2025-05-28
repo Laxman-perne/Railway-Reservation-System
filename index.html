@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLR Railways - Online Reservation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/83/Indian_Railways.svg/1200px-Indian_Railways.svg.png" alt="SLR Railways Logo">
+            <h1>SLR Railways</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('book-ticket')">Book Ticket</a></li>
+                <li><a href="#" onclick="showPage('pnr-status')">PNR Status</a></li>
+                <li><a href="#" onclick="showPage('my-bookings')">My Bookings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div id="home-page">
+            <div class="hero">
+                <h1>Welcome to SLR Railways</h1>
+                <p>Book your train tickets online with ease</p>
+            </div>
+
+            <div class="search-box">
+                <h2>Search Trains</h2>
+                <form id="search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="from-station">From</label>
+                            <select id="from-station" required>
+                                <option value="">Select Station</option>
+                                <option value="DEL">Delhi (DEL)</option>
+                                <option value="MUM">Mumbai (MUM)</option>
+                                <option value="CHE">Chennai (CHE)</option>
+                                <option value="KOL">Kolkata (KOL)</option>
+                                <option value="BAN">Bangalore (BAN)</option>
+                                <option value="HYD">Hyderabad (HYD)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="to-station">To</label>
+                            <select id="to-station" required>
+                                <option value="">Select Station</option>
+                                <option value="DEL">Delhi (DEL)</option>
+                                <option value="MUM">Mumbai (MUM)</option>
+                                <option value="CHE">Chennai (CHE)</option>
+                                <option value="KOL">Kolkata (KOL)</option>
+                                <option value="BAN">Bangalore (BAN)</option>
+                                <option value="HYD">Hyderabad (HYD)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="travel-date">Date of Journey</label>
+                            <input type="date" id="travel-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Class</label>
+                            <select id="class" required>
+                                <option value="">Select Class</option>
+                                <option value="SL">Sleeper (SL)</option>
+                                <option value="3A">AC 3 Tier (3A)</option>
+                                <option value="2A">AC 2 Tier (2A)</option>
+                                <option value="1A">AC First Class (1A)</option>
+                                <option value="CC">Chair Car (CC)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" id="search-button">Search Trains</button>
+                </form>
+            </div>
+
+            <div id="trains-results" class="hidden">
+                <div class="trains-list" id="trains-list"></div>
+            </div>
+        </div>
+
+        <div id="book-ticket-page" class="hidden">
+            <div class="booking-form">
+                <h2>Book Your Ticket</h2>
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label for="train-number">Train Number</label>
+                        <input type="text" id="train-number" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="train-name">Train Name</label>
+                        <input type="text" id="train-name" readonly>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="from-station-booking">From</label>
+                            <input type="text" id="from-station-booking" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="to-station-booking">To</label>
+                            <input type="text" id="to-station-booking" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="departure-time">Departure</label>
+                            <input type="text" id="departure-time" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="arrival-time">Arrival</label>
+                            <input type="text" id="arrival-time" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="travel-date-booking">Date of Journey</label>
+                            <input type="text" id="travel-date-booking" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="travel-class-booking">Class</label>
+                            <input type="text" id="travel-class-booking" readonly>
+                        </div>
+                    </div>
+                    
+                    <h3>Passenger Details</h3>
+                    <div id="passenger-forms">
+                        <div class="passenger-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="passenger-name-1">Name</label>
+                                    <input type="text" id="passenger-name-1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passenger-age-1">Age</label>
+                                    <input type="number" id="passenger-age-1" required min="1" max="120">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="passenger-gender-1">Gender</label>
+                                    <select id="passenger-gender-1" required>
+                                        <option value="">Select</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passenger-berth-1">Berth Preference</label>
+                                    <select id="passenger-berth-1">
+                                        <option value="">No Preference</option>
+                                        <option value="Lower">Lower</option>
+                                        <option value="Middle">Middle</option>
+                                        <option value="Upper">Upper</option>
+                                        <option value="Side Lower">Side Lower</option>
+                                        <option value="Side Upper">Side Upper</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="add-passenger-button">Add Passenger</button>
+                    <button type="button" id="confirm-booking-button">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="ticket-page" class="hidden">
+            <div class="ticket-display">
+                <h2>Your Ticket</h2>
+                <div class="ticket">
+                    <div class="ticket-header">
+                        <div>
+                            <h3 id="ticket-train-name">Rajdhani Express (12951)</h3>
+                            <p id="ticket-train-route">Delhi (DEL) to Mumbai (MUM)</p>
+                        </div>
+                        <div>
+                            <p><span>PNR:</span> <span id="ticket-pnr">8263847263</span></p>
+                            <p><span>Date:</span> <span id="ticket-date">15 June 2023</span></p>
+                        </div>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="ticket-info">
+                            <p><span>Departure:</span> <span id="ticket-departure">16:30</span></p>
+                            <p><span>Arrival:</span> <span id="ticket-arrival">08:45 (+1 day)</span></p>
+                            <p><span>Class:</span> <span id="ticket-class">AC 2 Tier (2A)</span></p>
+                            <p><span>Duration:</span> <span id="ticket-duration">16h 15m</span></p>
+                            <div id="ticket-passengers">
+                                <p><span>Passengers:</span></p>
+                                <ul id="passenger-list"></ul>
+                            </div>
+                            <p><span>Status:</span> <span id="ticket-status" class="status-confirmed">Confirmed</span></p>
+                        </div>
+                        <div class="ticket-qr">
+                            <svg width="100" height="100" viewBox="0 0 100 100">
+                                <!-- Background white square -->
+                                <rect width="100" height="100" fill="white"/>
+                                
+                                <!-- QR Code pattern - simplified version -->
+                                <!-- Position detection patterns (corners) -->
+                                <rect x="10" y="10" width="20" height="20" fill="black"/>
+                                <rect x="14" y="14" width="12" height="12" fill="white"/>
+                                <rect x="18" y="18" width="4" height="4" fill="black"/>
+                                
+                                <rect x="70" y="10" width="20" height="20" fill="black"/>
+                                <rect x="74" y="14" width="12" height="12" fill="white"/>
+                                <rect x="78" y="18" width="4" height="4" fill="black"/>
+                                
+                                <rect x="10" y="70" width="20" height="20" fill="black"/>
+                                <rect x="14" y="74" width="12" height="12" fill="white"/>
+                                <rect x="18" y="78" width="4" height="4" fill="black"/>
+                                
+                                <!-- Random QR code data pattern -->
+                                <rect x="40" y="10" width="4" height="4" fill="black"/>
+                                <rect x="48" y="10" width="4" height="4" fill="black"/>
+                                <rect x="56" y="14" width="4" height="4" fill="black"/>
+                                <rect x="36" y="18" width="4" height="4" fill="black"/>
+                                <rect x="44" y="22" width="4" height="4" fill="black"/>
+                                <rect x="52" y="26" width="4" height="4" fill="black"/>
+                                <rect x="40" y="30" width="4" height="4" fill="black"/>
+                                <rect x="60" y="30" width="4" height="4" fill="black"/>
+                                <rect x="32" y="38" width="4" height="4" fill="black"/>
+                                <rect x="48" y="38" width="4" height="4" fill="black"/>
+                                <rect x="56" y="42" width="4" height="4" fill="black"/>
+                                <rect x="64" y="46" width="4" height="4" fill="black"/>
+                                <rect x="40" y="50" width="4" height="4" fill="black"/>
+                                <rect x="52" y="50" width="4" height="4" fill="black"/>
+                                <rect x="28" y="54" width="4" height="4" fill="black"/>
+                                <rect x="60" y="58" width="4" height="4" fill="black"/>
+                                <rect x="44" y="62" width="4" height="4" fill="black"/>
+                                <rect x="36" y="66" width="4" height="4" fill="black"/>
+                                <rect x="52" y="70" width="4" height="4" fill="black"/>
+                                <rect x="40" y="74" width="4" height="4" fill="black"/>
+                                <rect x="60" y="74" width="4" height="4" fill="black"/>
+                                <rect x="68" y="78" width="4" height="4" fill="black"/>
+                                <rect x="48" y="82" width="4" height="4" fill="black"/>
+                                <rect x="56" y="86" width="4" height="4" fill="black"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <button id="back-to-home">Back to Home</button>
+            </div>
+        </div>
+
+        <div id="pnr-status-page" class="hidden">
+            <div class="search-box">
+                <h2>Check PNR Status</h2>
+                <form id="pnr-form">
+                    <div class="form-group">
+                        <label for="pnr-number">Enter 10-digit PNR Number</label>
+                        <input type="text" id="pnr-number" pattern="[0-9]{10}" required placeholder="e.g. 8263847263">
+                    </div>
+                    <button type="button" id="check-pnr-button">Check Status</button>
+                </form>
+            </div>
+            <div id="pnr-result" class="hidden"></div>
+        </div>
+
+        <div id="my-bookings-page" class="hidden">
+            <h2>My Bookings</h2>
+            <div id="bookings-list"></div>
+        </div>
+        
+        <div id="payment-page" class="hidden">
+            <div class="payment-form">
+                <h2>Payment</h2>
+                <div class="payment-details">
+                    <p><strong>Amount:</strong> <span id="payment-amount">₹1250</span></p>
+                    <p><strong>Train:</strong> <span id="payment-train-details">Rajdhani Express (12951) - AC 2 Tier</span></p>
+                    <p><strong>Journey:</strong> <span id="payment-journey-details">Delhi to Mumbai on 15 June 2023</span></p>
+                    <p><strong>Passengers:</strong> <span id="payment-passenger-count">1 passenger(s)</span></p>
+                </div>
+                <form id="payment-form">
+                    <div class="payment-methods">
+                        <h3>Select Payment Method</h3>
+                        <div class="payment-options">
+                            <div class="payment-option">
+                                <input type="radio" name="payment-method" id="card-option" value="card" checked>
+                                <label for="card-option">Credit/Debit Card</label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" name="payment-method" id="upi-option" value="upi">
+                                <label for="upi-option">UPI</label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" name="payment-method" id="netbanking-option" value="netbanking">
+                                <label for="netbanking-option">Net Banking</label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" name="payment-method" id="wallet-option" value="wallet">
+                                <label for="wallet-option">Mobile Wallet</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="card-fields">
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-name">Name on Card</label>
+                                <input type="text" id="card-name" placeholder="John Doe">
+                            </div>
+                            <div class="form-group half-width">
+                                <label for="card-expiry">Expiry Date</label>
+                                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group half-width">
+                                <label for="card-cvv">CVV</label>
+                                <input type="password" id="card-cvv" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="upi-fields" class="hidden">
+                        <div class="form-group">
+                            <label for="upi-id">UPI ID</label>
+                            <input type="text" id="upi-id" placeholder="yourname@upi">
+                        </div>
+                    </div>
+                    
+                    <div id="netbanking-fields" class="hidden">
+                        <div class="form-group">
+                            <label for="netbanking-bank">Select Bank</label>
+                            <select id="netbanking-bank">
+                                <option value="">Select Bank</option>
+                                <option value="sbi">State Bank of India</option>
+                                <option value="hdfc">HDFC Bank</option>
+                                <option value="icici">ICICI Bank</option>
+                                <option value="axis">Axis Bank</option>
+                                <option value="kotak">Kotak Mahindra Bank</option>
+                                <option value="pnb">Punjab National Bank</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="wallet-fields" class="hidden">
+                        <div class="form-group">
+                            <label for="wallet-type">Select Wallet</label>
+                            <select id="wallet-type">
+                                <option value="">Select Wallet</option>
+                                <option value="paytm">Paytm</option>
+                                <option value="phonepe">PhonePe</option>
+                                <option value="gpay">Google Pay</option>
+                                <option value="mobikwik">Mobikwik</option>
+                                <option value="amazonpay">Amazon Pay</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="pay-now-button">Pay Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="payment-success" class="hidden">
+        <div class="payment-success-overlay">
+            <div class="payment-success-modal">
+                <div class="success-icon">
+                    <svg viewBox="0 0 52 52" width="70" height="70">
+                        <circle cx="26" cy="26" r="25" fill="none" stroke="#2E5E43" stroke-width="2"/>
+                        <path d="M14.1 27.2l7.1 7.2 16.7-16.8" fill="none" stroke="#2E5E43" stroke-width="3"/>
+                    </svg>
+                </div>
+                <h2>Payment Successful!</h2>
+                <p>Your booking has been confirmed.</p>
+                <p>PNR: <span id="success-pnr">8263847263</span></p>
+                <button id="view-ticket-button">View Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 SLR Railways. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
